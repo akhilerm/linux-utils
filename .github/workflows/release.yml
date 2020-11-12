@@ -27,8 +27,13 @@ jobs:
 
       - name: Set Tag
         run: |
-          echo "::set-env name=TAG::${GITHUB_REF#refs/*/v}"
-          echo "::set-env name=RELEASE_TAG::${TAG}"
+          TAG="${GITHUB_REF#refs/*/v}"
+          echo "TAG=${TAG}" >> $GITHUB_ENV
+          echo "RELEASE_TAG=${TAG}" >> $GITHUB_ENV
+
+      - name: Print Tag info
+        run: |
+          echo "RELEASE TAG: ${RELEASE_TAG}"
 
       - name: Setup QEMU
         uses: docker/setup-qemu-action@v1
